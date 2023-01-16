@@ -41,3 +41,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ### Dependencies
 
 - `react-firebase-hooks` - React hooks for Firebase
+- `react-toastify` - React notifications
