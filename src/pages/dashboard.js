@@ -3,7 +3,7 @@ import {auth} from '../../utils/firebase'
 import {useAuthState} from 'react-firebase-hooks/auth'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { collection, query, where, onSnapshot, doc, docRef, deleteDoc } from 'firebase/firestore'
+import { collection, query, where, onSnapshot, doc, docRef, deleteDoc, orderBy } from 'firebase/firestore'
 import { db} from '../../utils/firebase'
 import Message from '@/components/message'
 import {BsTrash2Fill} from 'react-icons/bs'
@@ -38,7 +38,7 @@ function Dashboard() {
     if (user) {
       console.log(user)
       const collectionRef = collection(db, 'posts')
-      const q = query(collectionRef, where('user', '==', user.uid))
+      const q = query(collectionRef, where('user', '==', user.uid), orderBy('timestamp', 'desc')) 
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         setAllPosts(querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id})))
       })
