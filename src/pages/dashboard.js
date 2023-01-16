@@ -3,12 +3,18 @@ import {auth} from '../../utils/firebase'
 import {useAuthState} from 'react-firebase-hooks/auth'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { collection, query, where, onSnapshot } from 'firebase/firestore'
+import { db } from '../../utils/firebase'
+import Message from '@/components/message'
 
 // to fix the flashing data when redirecting 
 //https://theodorusclarence.com/blog/nextjs-redirect-no-flashing
 //https://stackoverflow.com/questions/70297964/next-js-how-to-prevent-flash-of-the-unauthorized-route-page-prior-to-redirect-w
 
 function Dashboard() {
+  // state with all posts
+  const [allPosts, setAllPosts] = useState([])
+
   // Firebase hooks
   const [user, loading] = useAuthState(auth)
   
@@ -18,7 +24,16 @@ function Dashboard() {
   const getData = async () => {
     if (loading) return (<h1> Loading... </h1>)
     if (!user) return router.push('/auth/login')
-
+    // if user is logged in get all their posts
+    if (user) {
+      console.log(user)
+      const collectionRef = collection(db, 'posts')
+      const q = query(collectionRef, where('user', '==', user.uid))
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        setAllPosts(querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id})))
+      })
+      return unsubscribe
+    }
   }
 
   useEffect(() => {
@@ -31,7 +46,7 @@ function Dashboard() {
     <h1> Your posts </h1>
 
     <div>
-      <h2> Posts </h2>
+      {allPosts.map((post) => <Message key={post.id} {...post} />)}
     </div>
 
     <button onClick={() => {
