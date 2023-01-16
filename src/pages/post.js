@@ -2,8 +2,10 @@ import { auth, db } from '../../utils/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-// Handle collections  
+// Handle collections from db in firestore
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+// Notifications
+import { toast } from 'react-toastify'
 
 
 function Post() {
@@ -22,6 +24,21 @@ function Post() {
   const submitPost = async (e) => {
     // prevent refresh
     e.preventDefault()
+    // check if description is empty
+    if(!post.description.length) {
+      return toast.error('Description is required.', {
+        position: 'top-center',
+        autoClose: 3000,
+      }) 
+    }
+    // check if description is too long
+    if(post.description.length > maxLength) {
+      return toast.error(`Description is too long. Max length is ${maxLength} characters.`, {
+        position: 'top-center',
+        autoClose: 3000,
+      })
+    }
+
     const collectionRef = collection(db, 'posts') // get collection
     // add post to firestore
     await addDoc(collectionRef, {
