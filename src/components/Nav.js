@@ -29,7 +29,7 @@ function Nav() {
           <div className="flex items-center gap-6">
 
           <Link href="/dashboard" className='flex items-center'>
-            <Image src={user.photoURL} width={60} height={650} className='rounded-full' alt="u shouldn't see this"/> 
+            <Image src={user.photoURL} width={60} height={65} className='rounded-full' alt="u shouldn't see this"/> 
             <h3 className='mx-2'> {user.displayName} </h3>
           </Link>
 
