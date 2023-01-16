@@ -3,7 +3,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 // Handle collections from db in firestore
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { collection, addDoc, serverTimestamp, doc, updateDoc } from 'firebase/firestore'
 // Notifications
 import { toast } from 'react-toastify'
 
@@ -11,9 +11,10 @@ import { toast } from 'react-toastify'
 function Post() {
   // router
   const router = useRouter()  
+  // data when updating
+  const routeData = router.query
   //user auth state
   const [user, loading] = useAuthState(auth)
-
   //form state
   const [post, setPost] = useState({
     description: ''
@@ -38,16 +39,26 @@ function Post() {
         autoClose: 3000,
       })
     }
-
-    const collectionRef = collection(db, 'posts') // get collection
-    // add post to firestore
-    await addDoc(collectionRef, {
-      ...post,
-      timestamp: serverTimestamp(),
-      user: user.uid,
-      username: user.displayName,
-      avatar: user.photoURL,
-    })
+    // if post exists then update it
+    if (post.id) {
+      // update post
+      const docRef = doc(db, 'posts', post.id)
+      await updateDoc(docRef, {
+        description: post.description,
+        timestamp: serverTimestamp(),
+      })
+      return router.push('/dashboard')
+    }
+    else {
+      const collectionRef = collection(db, 'posts') // get collection
+      // add post to firestore
+      await addDoc(collectionRef, {
+        ...post,
+        timestamp: serverTimestamp(),
+        user: user.uid,
+        username: user.displayName,
+        avatar: user.photoURL,
+    })}
     // reset form
     setPost({
       description: '',
@@ -56,11 +67,32 @@ function Post() {
     return router.push('/dashboard')
   }
 
+  // check user if he wants to update post
+  //first we check user is logged in
+  const checkUser = () => {
+    if (loading) return (<h1> Loading... </h1>)
+    if (!user) return router.push('/auth/login')
+    // if user is logged in check if he wants to update post
+    if (routeData.id) {
+      setPost({
+        description: routeData.description,
+        timestamp: routeData.timestamp,
+        id: routeData.id
+      })
+      }
+    }
+  
+  useEffect(() => {
+    checkUser()
+  }, [user, loading])
+
   return (
     <div className='my-20 p-12 shadow-lg rounded-lg max-w-md mx-auto'>
       
       <form  onSubmit={submitPost}>
-        <h1 className='text-2xl font-bold'> Create a new post </h1>
+        <h1 className='text-2xl font-bold'> 
+        { post.id ? "Edit your post" : "Create a new post "}
+        </h1>
         <div> 
           <h3 className='text-lg font-medium py-2'> Description </h3>
           <textarea value={post.description} onChange={(e) => setPost({...post, description: e.target.value})} className='bg-slate-800 text-white rounded-lg w-full h-48 p-2'/> 

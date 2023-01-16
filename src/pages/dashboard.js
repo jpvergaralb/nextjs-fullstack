@@ -9,6 +9,7 @@ import Message from '@/components/message'
 import {BsTrash2Fill} from 'react-icons/bs'
 import {AiFillEdit} from 'react-icons/ai'
 import {GoSignOut} from 'react-icons/go'
+import Link from 'next/link'
 
 // to fix the flashing data when redirecting 
 //https://theodorusclarence.com/blog/nextjs-redirect-no-flashing
@@ -60,7 +61,9 @@ function Dashboard() {
                           <Message key={post.id} {...post}>
                               <div className='flex flex-start items-center my-3 '> 
                                 <button className='flex items-center gap-3 px-4  bg-gradient-to-r from-indigo-400 to-slate-600 rounded-md p-1 text-[#f0f0f0]' onClick={() => deletePost(post.id)}> Delete <BsTrash2Fill className='text-md' /> </button> 
+                                <Link href={{pathname: '/post', query: post}}>
                                 <button className='flex items-center gap-3 px-4 mx-4 bg-gradient-to-r from-indigo-400 to-slate-600 rounded-md p-1 text-[#f0f0f0]' onClick={() => { }}> Edit <AiFillEdit/></button> 
+                                </Link>
                               </div>
                             </Message>
                               )}
