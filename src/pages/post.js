@@ -7,6 +7,8 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 
 
 function Post() {
+  // router
+  const router = useRouter()  
   //user auth state
   const [user, loading] = useAuthState(auth)
 
@@ -34,7 +36,7 @@ function Post() {
       description: '',
       timestamp: null
     })
-
+    return router.push('/dashboard')
   }
 
   return (
