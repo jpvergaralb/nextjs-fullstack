@@ -47,6 +47,10 @@ function Post() {
         description: post.description,
         timestamp: serverTimestamp(),
       })
+      toast.success('Post updated successfully.', {
+        position: 'top-center',
+        autoClose: 3000,
+      })
       return router.push('/dashboard')
     }
     else {
@@ -63,6 +67,10 @@ function Post() {
     setPost({
       description: '',
       timestamp: null
+    })
+    toast.success('Post created successfully.', {
+      position: 'top-center',
+      autoClose: 3000,
     })
     return router.push('/dashboard')
   }
