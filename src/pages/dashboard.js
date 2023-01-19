@@ -37,7 +37,6 @@ function Dashboard() {
     if (!user) return router.push('/auth/login')
     // if user is logged in get all their posts
     if (user) {
-      console.log(user)
       const collectionRef = collection(db, 'posts')
       const q = query(collectionRef, where('user', '==', user.uid), orderBy('timestamp', 'desc')) 
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
