@@ -1,5 +1,5 @@
 import Head from 'next/head'
-
+import Link from 'next/link'
 //Message component
 import Message from '../components/message'
 // hooks
@@ -37,7 +37,14 @@ export default function Home() {
 
       <div className='my-12 text-lg font-medium'>
         <h2 className='text-2xl'> See what other people are saying </h2>
-        {allPosts.map((post) => <Message key={post.id} {...post} />)}
+        {allPosts.map((post) => 
+
+        <Message key={post.id} {...post}> 
+          <Link href={{pathname:`/${post.id}`, query: {...post}}}>
+            <button className='text-blue-500 hover:underline'> {post.comments?.length ? post.comments.length : "0"} comments</button>
+          </Link>
+        </Message>
+         )}
       </div>
     </>
   )
