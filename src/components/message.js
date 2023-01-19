@@ -12,7 +12,7 @@ function Message({children, avatar, username, description, timestamp, id}) {
           <h3 className="text-ellipsis overflow-clip font-normal py-3"> {description} </h3>
       </div>
       <div> 
-        <p className="text-sm py-1"> {new Date(timestamp?.toDate()).toLocaleString()} </p>
+        <p className="text-sm py-1"> {timestamp ? new Date(timestamp?.toDate()).toLocaleString() : ''} </p>
       </div>
       {children}
     </div>
