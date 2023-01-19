@@ -15,7 +15,7 @@ function Nav() {
   return (
     <div className="flex justify-between items-center py-10">
       <Link href="/">
-      <button className='text-lg font-medium'> Creative minds </button>
+      <button className='text-lg font-medium'> Twutter </button>
       </Link>
 
       <ul className='flex items-center gap-10'>
