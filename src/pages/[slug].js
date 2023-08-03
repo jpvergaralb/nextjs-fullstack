@@ -11,6 +11,9 @@ import Image from 'next/image'
 function Details() {
   const router = useRouter()
   const routeData = router.query
+  console.log(
+    routeData
+  )
   const [message, setMessage] = useState('')
   const [allMessages, setAllMessages] = useState([])
 
@@ -54,14 +57,14 @@ function Details() {
       <div>
         <div className='flex'>
           <input className='bg-slate-800 text-white fond-medium p-2 w-full shadow-md rounded-md' type={"text"} placeholder={"Add a comment"} value={message} onChange={(e) => setMessage(e.target.value) }/>
-          <button onClick={submitMessage} className='bg-gradient-to-r from-indigo-900 to-slate-900 mx-2 text-white font-medium p-2 rounded-md'> Submit </button>
+          <button onClick={submitMessage} className='bg-cool-dark-2 bg-opacity-50 shadow-lg backdrop-blur- rounded-xl mx-2 text-white font-medium p-2'> Submit </button>
         </div>
 
-        <div>
+        <div className='text-slate-300'>
           <h2 className='my-5 font-medium'> Comments </h2>
-          <h2 className='my-5 bg-gradient-to-r from-gray-900 to-slate-900 text-white font-medium p-2 rounded-md'> 
-            {allMessages?.map((message) => (
-              <div key={message.id} className="p-4">
+          <h2 className='my-5 font-medium rounded-md'> 
+            {allMessages && allMessages.length > 0 ? allMessages.map((message) => (
+              <div key={message.id} className="p-4 bg-gradient-to-r from-cool-dark to-cool-dark-3 rounded-lg my-5">
                 <div className='flex items-center flex-start'>
                 <Image src={message.avatar} height={32} width={32} alt="avatar" className="rounded-full" />
                 <h1 className='mx-2'> {message.user} </h1>
@@ -71,8 +74,11 @@ function Details() {
                   {message.message}
                 </div>
               </div>
-            ))}
+            ))
+            : "No comments yet"
+            }
           </h2>
+
         </div>
       </div>
     </div>

@@ -95,7 +95,7 @@ function Post() {
   }, [user, loading])
 
   return (
-    <div className='my-20 p-12 shadow-lg rounded-lg max-w-md mx-auto'>
+    <div className='my-20 p-12 shadow-lg rounded-xl max-w-md mx-auto border border-slate-800 bg-gray-900 text-slate-200'>
       
       <form  onSubmit={submitPost}>
         <h1 className='text-2xl font-bold'> 
@@ -108,7 +108,7 @@ function Post() {
             {post.description.length}/{maxLength}
           </p>
         </div>
-        <button type="submit" className='w-full p-2 my-4 rounded-lg shadow-lg'> Submit </button>
+        <button type="submit" className='w-full p-2 my-4 rounded-lg shadow-lg bg-gradient-to-r from-slate-800 to-gray-800'> Submit </button>
       </form>
 
     </div>

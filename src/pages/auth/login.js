@@ -34,7 +34,7 @@ function Login() {
   }, [user])
 
   return (
-    <div className="shadow-xl mt-32 p-10 text-gray-700 rounded-lg">
+    <div className="mt-32 p-10 text-slate-300  border border-cool-dark-2 bg-cool-dark-2 bg-opacity-20 shadow-lg backdrop-blur- rounded-xl">
       <h2 className="text-2xl font-medium"> Join Today </h2>
 
       <div className="py-4">

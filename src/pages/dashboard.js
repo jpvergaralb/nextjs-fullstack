@@ -59,9 +59,9 @@ function Dashboard() {
       {allPosts.map((post) =>
                           <Message key={post.id} {...post}>
                               <div className='flex flex-start items-center my-3 '> 
-                                <button className='flex items-center gap-3 px-4  bg-gradient-to-r from-indigo-400 to-slate-600 rounded-md p-1 text-[#f0f0f0]' onClick={() => deletePost(post.id)}> Delete <BsTrash2Fill className='text-md' /> </button> 
+                                <button className='flex items-center gap-3 px-4  bg-gradient-to-r bg-red-100 rounded-md p-1 text-red-900' onClick={() => deletePost(post.id)}> Delete <BsTrash2Fill className='text-md text-red-800' /> </button> 
                                 <Link href={{pathname: '/post', query: post}}>
-                                <button className='flex items-center gap-3 px-4 mx-4 bg-gradient-to-r from-indigo-400 to-slate-600 rounded-md p-1 text-[#f0f0f0]' onClick={() => { }}> Edit <AiFillEdit/></button> 
+                                <button className='flex items-center gap-3 px-4 mx-4 bg-green-100 rounded-md p-1 text-green-900' onClick={() => { }}> Edit <AiFillEdit className='text-green-800'/></button> 
                                 </Link>
                               </div>
                             </Message>
