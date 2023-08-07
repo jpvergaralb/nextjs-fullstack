@@ -22,7 +22,7 @@ function Nav() {
       <ul className='flex items-center gap-10'>
         {!user &&  (<Link href={"/auth/login"}>
           <button className='py-2 px-4 text-sm  bg-cool-dark-2 bg-opacity-50 shadow-lg backdrop-blur-md rounded-xl text-slate-200 font-medium ml-8'> 
-            Join now 
+            Sign in
           </button>
         </Link>)}
 
